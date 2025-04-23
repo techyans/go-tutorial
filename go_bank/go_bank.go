@@ -1,35 +1,9 @@
 package main
 
-import (
-	"errors"
-	"fmt"
-	"os"
-	"strconv"
-)
+import "fmt"
 
-func GetBalFromFile() (float64, error) {
-	data, err := os.ReadFile("balance.txt")
-	if err != nil {
-		return 0, errors.New("File not found")
-	}
-	BalanceText := string(data)
-	balance, err := strconv.ParseFloat(BalanceText, 64)
-	if err != nil {
-		return 0, errors.New("Failed to parse balance")
-	}
-	return balance, nil
-}
-func WriteBalToFile(balance float64) {
-	BalanceText := fmt.Sprintf("%.2f", balance)
-	os.WriteFile("balance.txt", []byte(BalanceText), 0644)
-}
 func main() {
-	var accountBalance, err = GetBalFromFile()
-	if err != nil {
-		fmt.Println("Error")
-		fmt.Println(err)
-		panic("Sorry we can't process your request")
-	}
+	var accountBalance = 20000.0
 	fmt.Println("Welcome to Go Bank")
 	fmt.Println("Select your choice")
 	fmt.Println("1. Deposit Money")
@@ -52,7 +26,6 @@ func main() {
 		}
 		fmt.Println("Your deposit amount is:", depamount)
 		fmt.Println("Your new balance is:", accountBalance+depamount)
-		WriteBalToFile(accountBalance + depamount)
 	case 2:
 		var withamount float64
 		fmt.Print("Enter the amount you want to withdraw:")
@@ -67,7 +40,6 @@ func main() {
 
 		fmt.Println("Your withdraw amount is:", withamount)
 		fmt.Println("Your new balance is:", accountBalance-withamount)
-		WriteBalToFile(accountBalance - withamount)
 	case 3:
 		fmt.Printf("Your balance is: %.2f\n", accountBalance)
 	default:
