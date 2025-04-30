@@ -2,40 +2,15 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"go_course/user"
 )
-
-type User struct {
-	firstName string
-	lastName  string
-	birthDate string
-	createdAt time.Time
-}
-
-func (u *User) OutputUserDet() {
-	fmt.Println(u.firstName, u.lastName, u.birthDate)
-}
-
-func (u *User) Clearoutput() {
-	u.firstName = ""
-	u.lastName = ""
-}
-
-func newUser(firstName, lastName, birthDate string) *User {
-	return &User{
-		firstName: firstName,
-		lastName:  lastName,
-		birthDate: birthDate,
-		createdAt: time.Now(),
-	}
-}
 
 func main() {
 	firstName := getUserData("Please enter your first name")
 	lastName := getUserData("Please enter your last name")
 	birthDate := getUserData("Please enter your birth date (MM/DD/YYYY)")
 
-	var Appuser User
+	var Appuser *user.User
 
 	// Appuser = User{
 	// 	firstName: firstName,
@@ -43,8 +18,16 @@ func main() {
 	// 	birthDate: birthDate,
 	// 	createdAt: time.Now(),
 	// }
-	Appuser = *newUser(firstName, lastName, birthDate)
+	admin := user.NewAdmin("admin", "admin@123")
+	admin.OutputUserDet()
+	admin.Clearoutput()
+	admin.OutputUserDet()
 
+	Appuser, err := user.NewUser(firstName, lastName, birthDate)
+
+	if err != nil {
+		fmt.Println(err)
+	}
 	Appuser.OutputUserDet()
 	Appuser.Clearoutput()
 	Appuser.OutputUserDet()
@@ -54,6 +37,6 @@ func main() {
 func getUserData(userdata string) string {
 	fmt.Println(userdata)
 	var value string
-	fmt.Scan(&value)
+	fmt.Scanln(&value)
 	return value
 }
