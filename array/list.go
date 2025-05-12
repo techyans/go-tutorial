@@ -17,6 +17,11 @@ func main() {
 	price = append([]float64{100}, price...)
 
 	fmt.Println(price)
+
+	addedPrice := []float64{99.2, 23, 24.1}
+	price = append(price, addedPrice...)
+
+	fmt.Println(price)
 }
 
 /*func main() {
